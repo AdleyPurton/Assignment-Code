@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+        #dashboard { /*css styling for the dashboard containing the menu buttons*/
+            background-color: #87CEFA; 
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: centre;
+        }
+        #Titlebutton { /*css styling for the title for which uses an invisible button*/
+            font-family: 'Roboto', sans-serif;
+            align-items: centre;
+            background-color: #87CEFA; 
+            border: 0px;
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+        }
+        #bottom { /*this is a class id for any class object i wish to be on the bottom end of the screen*/
+            position: absolute; 
+            bottom: 50px;  
+        }
+        #filter-container { /*this is a class id for the filter changer this will make sure the filter container is easy to work on style wise differently to say a button*/
+            position: absolute;
+            font-family: 'Roboto', sans-serif;
+            padding:10px;
+            top: 65px;
+            right: 0px;
+        }
+        #filter-dropdown { /*this css here allows for me to edit the style of the filter dropdown seperately to the other parts of the website*/
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+        }
+        #home-button { /*css styling for specifically the home button which looks different to other buttons*/
+            background-color: #87CEFA;
+            padding: 10px 20px;
+            border: 0px; 
+            border-radius: 5px;
+            color: #333;
+            text-decoration: none;
+        }
+        #search-bar { /*css styling for the search bar */
+            padding: 10px;
+            border: 0px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }   
+        #top { /*this is another css class id to allow anything i give the id to be positioned at he top of the website*/
+            position: absolute;
+            top:100px;
+            right:0px;
+            width: 65%;
+            border-collapse: collapse; 
+            border-radius: 1px;
+            border-colour: #fff;
+            a
+        }
+        th, td { /*this css specifically edits the th and td portions of the tables i create and just gives them a fresh look*/
+            padding: 8px;
+            text-align: centre;
+            border-bottom: 10px;
+            background-color: #fff;
+            border-colour: #fff;
+        }
+        td:hover { /*this allows for any td part of a table to be hoverable ot allow for consistency within the website*/
+            background-color: #ADD8E6;
+        }
+        tr:hover { /*this is another hoverable style but for the tr portions of the tables*/
+            background-color: #ADD8E6;
+        }
+        #table-container { /*this is css for a table container which means nay table i create will be given these sets of rules on positioning and size*/
+            max-height: 300px; 
+            overflow: auto;
+            position: absolute; 
+            bottom: 50px;
+            width:65%;
+            right:0px;
+        }
+        #city-button { /*this is css styling for specifically the city buttons on the map, i wanted these to look different to other buttons on the website*/
+            position: absolute;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            background-color: #FFA500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #body { /*this is css styling to give the main body of the html a sophisticated style*/
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        body{ /*this url here adds a background image to the website to give the website some character*/
+           background-image: url('https://wallpapers.com/images/featured/outdoor-119arfo9rikosnsz.jpg');
+                
+        }
+        #h1 { /*this css styling for h1 gives any heading1 class a style*/
+            font-size: 3em;
+            font-weight: bold;
+            color: #ADD8E6;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        #a {
+            color: #ADD8E6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        #a:hover {
+            color: #ADD8E6;
+        }
+        #chat-container {
+            width: 300px;
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: White;
+        }
+
+        #chat-messages {
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+        }
+
+        #user-input {
+            display: flex;
+            padding: 10px;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #send-button {
+            margin-left: 10px;
+            padding: 8px;
+            cursor: pointer;
+        }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div id="dashboard"> <!--here is the html code for the dashboard you see at the top of the screen cotaning the home button and title -->
+        <button id="home-button">Home</button>
+        <button id="Titlebutton">UKWeatherMap.com</button>
+        <input type="text" id="search-bar" placeholder="Search...">
+    </div>
+    <div id="filter-container"> <!--this div was given the filter container id making it my place to contain my filter for the wind speed -->
+        <label for="speed-filter">Wind Speed Unit:</label>
+        <select id="speed-filter">
+            <option value="mph">mph</option>
+            <option value="kmh">km/h</option>
+            <option value="m/s">m/s</option>
+        </select>
+    </div>
+    
+    
+    <img id="uk-map"src="https://api.interactive-img.com/interactiveimage/5c5c007798ada.jpg" alt="map" height="800" width="650"> <!--buttons all containing the generatetemp() function to allow the code to generate some static data for viewing on click -->
+    <button id="city-button" onclick="generatetemp()" style="top: 730px; left: 530px;">London</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 380px; left: 380px;">Edinburgh</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 750px; left: 430px;">Bristol</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 700px; left: 380px;">Cardiff</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 650px; left: 450px;">Birmingham</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 570px; left: 410px;">Liverpool</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 550px; left: 470px;">Manchester</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 500px; left: 230px;">Belfast</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 290px; left: 440px;">Aberdeen</button>
+    <button id="city-button" onclick="generatetemp()" style="top: 650px; left: 590px;">Norwich</button>
+  
+  <div>
+    <table id="top"> <!-- here is the table which would show the weather and temperature during the week when the city is clicked on -->
+      <tr>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+        <th>Sun</th>
+        
+      </tr> <!--some images were acquired for each type of weather and inputed into the table for some static data -->
+      <tr>
+        <td style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="80" width="120"></td> 
+        <td style="text-align: center;"><img src="data:image/png;base64,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"height="75"width="95"></td>
+        <td style="text-align: center;"><img src="data:image/png;base64,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"height="80"width="80"></td>
+        <td style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="80"width="80"></td>
+        <td style="text-align: center;"><img src="https://www.starnewsonline.com/gcdn/authoring/2013/03/19/NSTN/ghows-NC-2b8bcad6-8bb0-42af-91bc-118a39bf64c6-6f70deaf.jpeg?width=1200&disable=upscale&format=pjpg&auto=webp"height="100"width="100"</td>
+        <td style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="80"width="80"</td>
+        <td style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="80" width="120"></td>
+        
+      </tr>
+      <tr>
+        <td id="temp0"style="text-align: center;"></td>
+        <td id="temp1"style="text-align: center;"></td>
+        <td id="temp2"style="text-align: center;"></td>
+        <td id="temp3"style="text-align: center;"></td>
+        <td id="temp4"style="text-align: center;"></td>
+        <td id="temp5"style="text-align: center;"></td>
+        <td id="temp6"style="text-align: center;"></td>
+      </tr>
+    </table>
+  </div></br>
+  <div id="chat-container">
+        <div id="chat-messages">
+            
+            <div><strong>Server:</strong> Start of chat say "hello"!!</div>
+            
+        </div>
+        <div id="user-input">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+  <div id="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>00:00</th> <!--these are the times of day for the second table to talk about the daily weather of a city on click -->
+          <th>01:00</th>
+          <th>02:00</th>
+          <th>03:00</th>
+          <th>04:00</th>
+          <th>05:00</th>
+          <th>06:00</th>
+          <th>07:00</th>
+          <th>08:00</th>
+          <th>09:00</th>
+          <th>10:00</th>
+          <th>11:00</th>
+          <th>12:00</th>
+          <th>13:00</th>
+          <th>14:00</th>
+          <th>15:00</th>
+          <th>16:00</th>
+          <th>17:00</th>
+          <th>18:00</th>
+          <th>19:00</th>
+          <th>20:00</th>
+          <th>21:00</th>
+          <th>22:00</th>
+          <th>23:00</th>
+        </tr>
+        <tr>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="50"width="50"></th>
+          <th style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="50"width="50"></th>
+          <th style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="50"width="50"></th>
+          <th style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="50"width="50"></th>
+          <th style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="50"width="50"></th>
+          <th style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="50"width="50"></th>
+          <th style="text-align: center;"><img src="https://cdn.icon-icons.com/icons2/3191/PNG/512/sunny_sun_cloud_weather_cloudy_icon_194237.png"height="50"width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://www.creativefabrica.com/wp-content/uploads/2020/03/03/1583225088/Sunny-Weather-Icon-580x386.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/originals/dc/4a/80/dc4a803e357e73b2de96970781158055.jpg" height="50" width="50"></th>
+        </tr>
+        <tr>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+          <th style="text-align: center;"><img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/rain_drops.png" height="50" width="50">0%</th>
+        </tr>
+        <tr>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+          <th style="text-align: center;"><img src="https://i.pinimg.com/474x/5c/8a/b7/5c8ab749e2e59016dbc785da00717f6c.jpg" height="50" width="50"></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</body>
+<script>
+        function generatetemp() { //generates an array of 7 random temperatures between -10 and 40 degrees celsius to be output into the table for the weekly weather
+        var temperatures = [];
+        for (var i = 0; i < 7; i++) {
+            var temperature = Math.floor(Math.random() * (40 - (-10) + 1)) + (-10); //this random temperature code just creates some static data to be able to show functionality of the actaul website if properly created
+            temperatures.push(temperature);
+        }
+
+        // this displays the array of random temperatures into the corresponding class id of displayText0 etc etc...
+        var displayText0 = temperatures[0]+ "°C";
+        document.getElementById("temp0").innerHTML = displayText0;
+        var displayText1 = temperatures[1]+ "°C";
+        document.getElementById("temp1").innerHTML = displayText1;
+        var displayText2 = temperatures[2]+ "°C";
+        document.getElementById("temp2").innerHTML = displayText2;
+        var displayText3 = temperatures[3]+ "°C";
+        document.getElementById("temp3").innerHTML = displayText3;
+        var displayText4 = temperatures[4]+ "°C";
+        document.getElementById("temp4").innerHTML = displayText4;
+        var displayText5 = temperatures[5]+ "°C";
+        document.getElementById("temp5").innerHTML = displayText5
+        var displayText6 = temperatures[6]+ "°C";
+        document.getElementById("temp6").innerHTML = displayText6;
+    }
+</script>
+
+</html>
